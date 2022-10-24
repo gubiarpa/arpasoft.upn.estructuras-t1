@@ -37,6 +37,7 @@
                 _actual.Siguiente = nodo;
             }
             _actual = nodo; // hay un nuevo último nodo
+            _length++; // cuenta un elemento más
         }
 
         #region PreguntasT1
