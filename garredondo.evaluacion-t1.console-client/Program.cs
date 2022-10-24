@@ -21,9 +21,17 @@ namespace garredondo.evaluacion_t1.console_client
             listaDobleEnlazada.Agregar("Acuario");
             listaDobleEnlazada.Agregar("Piscis");
 
-            listaDobleEnlazada.Intercambiar(12, 6);
+            //listaDobleEnlazada.Intercambiar(12, 6);
 
-            listaDobleEnlazada.Eliminar(2);
+            //listaDobleEnlazada.Eliminar(2);
+
+            //listaDobleEnlazada.Agregar("I");
+            //listaDobleEnlazada.Agregar("E");
+            //listaDobleEnlazada.Agregar("A");
+            //listaDobleEnlazada.Agregar("U");
+            //listaDobleEnlazada.Agregar("O");
+
+            listaDobleEnlazada.Ordenar();
 
             listaDobleEnlazada.Imprimir();
         }

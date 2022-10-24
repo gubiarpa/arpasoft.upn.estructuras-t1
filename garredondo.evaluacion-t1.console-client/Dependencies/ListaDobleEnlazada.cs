@@ -125,7 +125,25 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
 
         public void Ordenar()
         {
-            throw new System.NotImplementedException();
+            var nodoCompara = _inicial;
+            var posicionCompara = 1;
+
+            var nodoCambio = _inicial.Siguiente;
+            var posicionCambio = 2;
+
+            while (nodoCompara != null && nodoCambio != null)
+            {
+                var comparacion = string.Compare(nodoCompara.Elemento.ToString(), nodoCambio.Elemento.ToString());
+
+                if (comparacion > 0)
+                {
+                    Intercambiar(posicionCambio, posicionCompara);
+                    posicionCompara = 1;
+                    nodoCompara = _inicial;
+                }
+                posicionCambio++;
+                nodoCambio = ObtenerNodoPorIndice(posicionCambio);
+            }
         }
         #endregion
 
