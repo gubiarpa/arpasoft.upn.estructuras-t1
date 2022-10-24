@@ -1,4 +1,6 @@
-﻿namespace garredondo.evaluacion_t1.console_client.Dependencies
+﻿using System;
+
+namespace garredondo.evaluacion_t1.console_client.Dependencies
 {
     public class ListaDobleEnlazada<T> : IListaDobleEnlazada<T>
     {
@@ -51,7 +53,7 @@
                 if (nodoA == null && nodoB == null)
                     return;
 
-                #region Desconexión Nodo A
+                #region Desconexión-Nodo-A
                 if (nodoA.Siguiente != null)
                     nodoA.Siguiente.Anterior = nodoB;
 
@@ -59,7 +61,7 @@
                     nodoA.Anterior.Siguiente = nodoB;
                 #endregion
 
-                #region Desconexión Nodo B
+                #region Desconexión-Nodo-B
                 if (nodoB.Siguiente != null)
                     nodoB.Siguiente.Anterior = nodoA;
 
@@ -76,6 +78,18 @@
                 nodoA.Siguiente = nodoB_Siguiente;
                 nodoB.Anterior = nodoA_Anterior;
                 nodoB.Siguiente = nodoA_Siguiente;
+
+                if (posicionA == 1)
+                    _inicial = nodoB;
+
+                if (posicionA == _length)
+                    _actual = nodoB;
+
+                if (posicionB == 1)
+                    _inicial = nodoA;
+
+                if (posicionB == _length)
+                    _actual = nodoA;
             }
         }
 
@@ -111,6 +125,22 @@
             }
 
             return nodoActual;
+        }
+
+        public void Imprimir()
+        {
+            if (EsListaVacia())
+                return;
+
+            Nodo<T> nodoActual = _inicial;
+            Console.WriteLine("Lista:");
+
+            while (nodoActual != null)
+            {
+                Console.WriteLine(nodoActual.Elemento);
+                nodoActual = nodoActual.Siguiente;
+            }
+            Console.WriteLine("----");
         }
         #endregion
     }
