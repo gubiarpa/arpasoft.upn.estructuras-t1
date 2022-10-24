@@ -43,9 +43,39 @@
         #region PreguntasT1
         public void Intercambiar(int posicionA, int posicionB)
         {
-            if (_length > 1) // solo aplica si 
+            if (_length > 1) // solo aplica si tiene más de un elemento
             {
+                var nodoA = ObtenerNodoPorIndice(posicionA);
+                var nodoB = ObtenerNodoPorIndice(posicionB);
 
+                if (nodoA == null && nodoB == null)
+                    return;
+
+                #region Desconexión Nodo A
+                if (nodoA.Siguiente != null)
+                    nodoA.Siguiente.Anterior = nodoB;
+
+                if (nodoA.Anterior != null)
+                    nodoA.Anterior.Siguiente = nodoB;
+                #endregion
+
+                #region Desconexión Nodo B
+                if (nodoB.Siguiente != null)
+                    nodoB.Siguiente.Anterior = nodoA;
+
+                if (nodoB.Anterior != null)
+                    nodoB.Anterior.Siguiente = nodoA;
+                #endregion
+
+                var nodoA_Anterior = nodoA.Anterior;
+                var nodoA_Siguiente = nodoA.Siguiente;
+                var nodoB_Anterior = nodoB.Anterior;
+                var nodoB_Siguiente = nodoB.Siguiente;
+
+                nodoA.Anterior = nodoB_Anterior;
+                nodoA.Siguiente = nodoB_Siguiente;
+                nodoB.Anterior = nodoA_Anterior;
+                nodoB.Siguiente = nodoA_Siguiente;
             }
         }
 
@@ -64,6 +94,23 @@
         private bool EsListaVacia()
         {
             return _inicial == null;
+        }
+
+        private Nodo<T> ObtenerNodoPorIndice(int posicion)
+        {
+            if (posicion <= 0 || posicion > _length)
+                return null;
+
+            int posicionActual = 1;
+            Nodo<T> nodoActual = _inicial;
+
+            while (posicionActual < posicion)
+            {
+                nodoActual = nodoActual.Siguiente;
+                posicionActual++;
+            }
+
+            return nodoActual;
         }
         #endregion
     }

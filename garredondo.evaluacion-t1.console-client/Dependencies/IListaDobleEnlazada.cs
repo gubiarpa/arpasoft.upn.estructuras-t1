@@ -2,8 +2,12 @@
 {
     public interface IListaDobleEnlazada<T>
     {
+        #region Preguntas-T1
         void Intercambiar(int posicionA, int posicionB);
         void Eliminar(int posicion);
         void Ordenar();
+        #endregion
+
+        void Agregar(T elemento);
     }
 }

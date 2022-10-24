@@ -1,4 +1,4 @@
-﻿using System;
+﻿using garredondo.evaluacion_t1.console_client.Dependencies;
 
 namespace garredondo.evaluacion_t1.console_client
 {
@@ -6,7 +6,21 @@ namespace garredondo.evaluacion_t1.console_client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IListaDobleEnlazada<string> listaDobleEnlazada = new ListaDobleEnlazada<string>();
+            listaDobleEnlazada.Agregar("Aries");
+            listaDobleEnlazada.Agregar("Tauro");
+            listaDobleEnlazada.Agregar("Géminis");
+            listaDobleEnlazada.Agregar("Cáncer");
+            listaDobleEnlazada.Agregar("Leo");
+            listaDobleEnlazada.Agregar("Virgo");
+            listaDobleEnlazada.Agregar("Libra");
+            listaDobleEnlazada.Agregar("Escórpio");
+            listaDobleEnlazada.Agregar("Sagitario");
+            listaDobleEnlazada.Agregar("Capricornio");
+            listaDobleEnlazada.Agregar("Acuario");
+            listaDobleEnlazada.Agregar("Piscis");
+
+            listaDobleEnlazada.Intercambiar(3, 6);
         }
     }
 }
