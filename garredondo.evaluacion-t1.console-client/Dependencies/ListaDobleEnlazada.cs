@@ -85,6 +85,8 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
                 if (nodoB_Anterior != null)
                     nodoB_Anterior.Siguiente = nodoA;
 
+                /// Reasigna los nuevos anteriores y siguientes
+                /// según si son contiguos
                 if (!sonContiguos)
                 {
                     nodoA.Anterior = nodoB_Anterior;
@@ -100,6 +102,7 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
                     nodoB.Anterior = nodoA_Anterior;
                 }
 
+                /// Actualiza los punteros a Inicial, Actual
                 if (posicionA == 1)
                     _inicial = nodoB;
 
