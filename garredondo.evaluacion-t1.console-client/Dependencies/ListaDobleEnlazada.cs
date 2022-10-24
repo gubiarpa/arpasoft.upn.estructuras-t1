@@ -47,37 +47,58 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
         {
             if (_length > 1) // solo aplica si tiene más de un elemento
             {
+                /// No se cambia sobre la misma posición
+                if (posicionA == posicionB)
+                    return;
+
+                /// Nos aseguramos que posicionA < posicionB
+                if (posicionA > posicionB)
+                    CambiarValores(posicionA, posicionB);
+
+                /// Ubicamos cada nodo según el índice
                 var nodoA = ObtenerNodoPorIndice(posicionA);
                 var nodoB = ObtenerNodoPorIndice(posicionB);
 
+                /// Si cualquiera es nulo, no hay cambio
                 if (nodoA == null && nodoB == null)
                     return;
 
+                /// Captura los nodos contiguos a los que intercambiarán
                 var nodoA_Anterior = nodoA.Anterior;
                 var nodoA_Siguiente = nodoA.Siguiente;
                 var nodoB_Anterior = nodoB.Anterior;
                 var nodoB_Siguiente = nodoB.Siguiente;
 
-                #region Desconexión-Nodo-A
-                if (nodoA.Siguiente != null)
-                    nodoA.Siguiente.Anterior = nodoB;
+                /// ¿posicionA y posicionB son contiguas?
+                var sonContiguos = SonPosicionesContiguas(posicionA, posicionB);
 
-                if (nodoA.Anterior != null)
-                    nodoA.Anterior.Siguiente = nodoB;
-                #endregion
+                /// Desconecta los contiguos
+                if (nodoA_Siguiente != null)
+                    nodoA_Siguiente.Anterior = nodoB;
 
-                #region Desconexión-Nodo-B
-                if (nodoB.Siguiente != null)
-                    nodoB.Siguiente.Anterior = nodoA;
+                if (nodoA_Anterior != null)
+                    nodoA_Anterior.Siguiente = nodoB;
 
-                if (nodoB.Anterior != null)
-                    nodoB.Anterior.Siguiente = nodoA;
-                #endregion
+                if (nodoB_Siguiente != null)
+                    nodoB_Siguiente.Anterior = nodoA;
 
-                nodoA.Anterior = nodoB_Anterior;
-                nodoA.Siguiente = nodoB_Siguiente;
-                nodoB.Anterior = nodoA_Anterior;
-                nodoB.Siguiente = nodoA_Siguiente;
+                if (nodoB_Anterior != null)
+                    nodoB_Anterior.Siguiente = nodoA;
+
+                if (!sonContiguos)
+                {
+                    nodoA.Anterior = nodoB_Anterior;
+                    nodoA.Siguiente = nodoB_Siguiente;
+                    nodoB.Anterior = nodoA_Anterior;
+                    nodoB.Siguiente = nodoA_Siguiente;
+                }
+                else
+                {
+                    nodoA.Anterior = nodoB;
+                    nodoA.Siguiente = nodoB_Siguiente;
+                    nodoB.Siguiente = nodoA;
+                    nodoB.Anterior = nodoA_Anterior;
+                }
 
                 if (posicionA == 1)
                     _inicial = nodoB;
@@ -108,6 +129,16 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
         private bool EsListaVacia()
         {
             return _inicial == null;
+        }
+
+        private bool SonPosicionesContiguas(int i, int j)
+        {
+            return (i + 1 == j);
+        }
+
+        private void CambiarValores(int i, int j)
+        {
+            var temp = i; i = j; j = temp;
         }
 
         private Nodo<T> ObtenerNodoPorIndice(int posicion)

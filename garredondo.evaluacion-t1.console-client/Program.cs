@@ -7,6 +7,7 @@ namespace garredondo.evaluacion_t1.console_client
         static void Main(string[] args)
         {
             IListaDobleEnlazada<string> listaDobleEnlazada = new ListaDobleEnlazada<string>();
+
             listaDobleEnlazada.Agregar("Aries");
             listaDobleEnlazada.Agregar("Tauro");
             listaDobleEnlazada.Agregar("Géminis");
@@ -20,7 +21,7 @@ namespace garredondo.evaluacion_t1.console_client
             listaDobleEnlazada.Agregar("Acuario");
             listaDobleEnlazada.Agregar("Piscis");
 
-            listaDobleEnlazada.Intercambiar(3, 12);
+            listaDobleEnlazada.Intercambiar(2, 6);
             listaDobleEnlazada.Imprimir();
         }
     }
