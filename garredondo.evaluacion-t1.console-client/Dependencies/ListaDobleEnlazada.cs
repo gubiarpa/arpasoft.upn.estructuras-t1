@@ -53,6 +53,11 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
                 if (nodoA == null && nodoB == null)
                     return;
 
+                var nodoA_Anterior = nodoA.Anterior;
+                var nodoA_Siguiente = nodoA.Siguiente;
+                var nodoB_Anterior = nodoB.Anterior;
+                var nodoB_Siguiente = nodoB.Siguiente;
+
                 #region Desconexión-Nodo-A
                 if (nodoA.Siguiente != null)
                     nodoA.Siguiente.Anterior = nodoB;
@@ -68,11 +73,6 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
                 if (nodoB.Anterior != null)
                     nodoB.Anterior.Siguiente = nodoA;
                 #endregion
-
-                var nodoA_Anterior = nodoA.Anterior;
-                var nodoA_Siguiente = nodoA.Siguiente;
-                var nodoB_Anterior = nodoB.Anterior;
-                var nodoB_Siguiente = nodoB.Siguiente;
 
                 nodoA.Anterior = nodoB_Anterior;
                 nodoA.Siguiente = nodoB_Siguiente;
