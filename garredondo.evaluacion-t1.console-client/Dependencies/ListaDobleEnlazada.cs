@@ -119,7 +119,18 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
 
         public void Eliminar(int posicion)
         {
-            throw new System.NotImplementedException();
+            if (IndiceFueraDeRango(posicion))
+                return;
+
+            var nodoEliminar = ObtenerNodoPorIndice(posicion);
+
+            if (nodoEliminar.Anterior != null)
+                nodoEliminar.Anterior.Siguiente = nodoEliminar.Siguiente;
+
+            if (nodoEliminar.Siguiente != null)
+                nodoEliminar.Siguiente.Anterior = nodoEliminar.Anterior;
+
+            _length--; // cuenta un elemento menos
         }
 
         public void Ordenar()
@@ -144,9 +155,14 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
             var temp = i; i = j; j = temp;
         }
 
+        private bool IndiceFueraDeRango(int posicion)
+        {
+            return (posicion < 1 || posicion > _length);
+        }
+
         private Nodo<T> ObtenerNodoPorIndice(int posicion)
         {
-            if (posicion <= 0 || posicion > _length)
+            if (IndiceFueraDeRango(posicion))
                 return null;
 
             int posicionActual = 1;
