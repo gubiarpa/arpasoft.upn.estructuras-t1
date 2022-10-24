@@ -45,76 +45,66 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
         #region PreguntasT1
         public void Intercambiar(int posicionA, int posicionB)
         {
-            if (_length > 1) // solo aplica si tiene más de un elemento
-            {
-                /// No se cambia sobre la misma posición
-                if (posicionA == posicionB)
-                    return;
+            /// Debe haber, al menos, dos elementos
+            if (_length <= 1)
+                return;
 
-                /// Nos aseguramos que posicionA < posicionB
-                if (posicionA > posicionB)
-                    CambiarValores(posicionA, posicionB);
+            /// No se cambia sobre la misma posición
+            if (posicionA == posicionB)
+                return;
 
-                /// Ubicamos cada nodo según el índice
-                var nodoA = ObtenerNodoPorIndice(posicionA);
-                var nodoB = ObtenerNodoPorIndice(posicionB);
+            /// Nos aseguramos que posicionA < posicionB
+            if (posicionA > posicionB)
+                CambiarValores(ref posicionA, ref posicionB);
 
-                /// Si cualquiera es nulo, no hay cambio
-                if (nodoA == null && nodoB == null)
-                    return;
+            /// Ubicamos cada nodo según el índice
+            var nodoA = ObtenerNodoPorIndice(posicionA);
+            var nodoB = ObtenerNodoPorIndice(posicionB);
 
-                /// Captura los nodos contiguos a los que intercambiarán
-                var nodoA_Anterior = nodoA.Anterior;
-                var nodoA_Siguiente = nodoA.Siguiente;
-                var nodoB_Anterior = nodoB.Anterior;
-                var nodoB_Siguiente = nodoB.Siguiente;
+            /// Si cualquiera es nulo, no hay cambio
+            if (nodoA == null && nodoB == null)
+                return;
 
-                /// ¿posicionA y posicionB son contiguas?
-                var sonContiguos = SonPosicionesContiguas(posicionA, posicionB);
+            /// Captura los nodos contiguos a los que intercambiarán
+            var nodoA_Anterior = nodoA.Anterior;
+            var nodoA_Siguiente = nodoA.Siguiente;
+            var nodoB_Anterior = nodoB.Anterior;
+            var nodoB_Siguiente = nodoB.Siguiente;
 
-                /// Desconecta los contiguos
-                if (nodoA_Siguiente != null)
-                    nodoA_Siguiente.Anterior = nodoB;
+            /// ¿posicionA y posicionB son contiguas?
+            var sonContiguos = SonPosicionesContiguas(posicionA, posicionB);
 
-                if (nodoA_Anterior != null)
-                    nodoA_Anterior.Siguiente = nodoB;
+            /// Desconecta los contiguos
+            if (nodoA_Siguiente != null)
+                nodoA_Siguiente.Anterior = nodoB;
 
-                if (nodoB_Siguiente != null)
-                    nodoB_Siguiente.Anterior = nodoA;
+            if (nodoA_Anterior != null)
+                nodoA_Anterior.Siguiente = nodoB;
 
-                if (nodoB_Anterior != null)
-                    nodoB_Anterior.Siguiente = nodoA;
+            if (nodoB_Siguiente != null)
+                nodoB_Siguiente.Anterior = nodoA;
 
-                /// Reasigna los nuevos anteriores y siguientes
-                /// según si son contiguos
-                if (!sonContiguos)
-                {
-                    nodoA.Anterior = nodoB_Anterior;
-                    nodoA.Siguiente = nodoB_Siguiente;
-                    nodoB.Anterior = nodoA_Anterior;
-                    nodoB.Siguiente = nodoA_Siguiente;
-                }
-                else
-                {
-                    nodoA.Anterior = nodoB;
-                    nodoA.Siguiente = nodoB_Siguiente;
-                    nodoB.Siguiente = nodoA;
-                    nodoB.Anterior = nodoA_Anterior;
-                }
+            if (nodoB_Anterior != null)
+                nodoB_Anterior.Siguiente = nodoA;
 
-                /// Actualiza los punteros a Inicial, Actual
-                if (posicionA == 1)
-                    _inicial = nodoB;
+            /// Actualiza anteriores y siguientes según si son contiguos
+            nodoA.Anterior = sonContiguos ? nodoB : nodoB_Anterior;
+            nodoA.Siguiente = nodoB_Siguiente;
+            nodoB.Anterior = nodoA_Anterior;
+            nodoB.Siguiente = sonContiguos ? nodoA : nodoA_Siguiente;
 
-                if (posicionA == _length)
-                    _actual = nodoB;
+            /// Actualiza los punteros a Inicial, Actual
+            if (posicionA == 1)
+                _inicial = nodoB;
 
-                if (posicionB == 1)
-                    _inicial = nodoA;
+            if (posicionA == _length)
+                _actual = nodoB;
 
-                if (posicionB == _length)
-                    _actual = nodoA;
-            }
+            if (posicionB == 1)
+                _inicial = nodoA;
+
+            if (posicionB == _length)
+                _actual = nodoA;
         }
 
         public void Eliminar(int posicion)
@@ -150,7 +140,7 @@ namespace garredondo.evaluacion_t1.console_client.Dependencies
             return (i + 1 == j);
         }
 
-        private void CambiarValores(int i, int j)
+        private void CambiarValores(ref int i, ref int j)
         {
             var temp = i; i = j; j = temp;
         }
